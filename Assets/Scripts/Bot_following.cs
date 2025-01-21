@@ -12,7 +12,7 @@ public class CollectionsTest : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private int _targetNumber;
     [SerializeField] private Transform[] _targets; // Array to hold current and target transforms
-    
+
 
     [ContextMenu("Animation")]
     private void Animation()
@@ -42,42 +42,18 @@ public class CollectionsTest : MonoBehaviour
                 if (_targetNumber >= _targets.Length)
                 {
                     _targetNumber = 0;
+                    _target = _targets[_targetNumber];
                 }
                 else
                 {
                     _target = _targets[_targetNumber];
                 }
+
                 distance = (_curent.position - _target.position).magnitude;
                 interval = _speed * Time.deltaTime;
             }
         }
-        
+
     }
-    
-    [ContextMenu("Average")]
-    private void Average()
-    {
-        int sum = 0;
-        for (int i = 0; i < _integerArray.Length; ++i)
-        {
-            sum += _integerArray[i];
-        }
 
-        int average = sum / _integerArray.Length;
-        Debug.Log($"Average for array: {average}");
-
-        float listSum = 0;
-
-        foreach (float value in _floatList)
-        {
-            listSum += value;
-        }
-        
-        /*for (int i = 0; i < _integerList.Count; ++i)
-        {
-            sum += _integerList[i];
-        }*/
-        float listAverage = listSum / _floatList.Count;
-        Debug.Log($"Average for list: {listAverage}");
-    }
 }
