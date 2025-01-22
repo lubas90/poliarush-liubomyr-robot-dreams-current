@@ -32,7 +32,7 @@ public class ListSample : MonoBehaviour
     [ContextMenu("Add to list")]
     private void Addtolist()
     {
-        if (_new_Value == "")
+        if (string.IsNullOrWhiteSpace(_new_Value))
         {
             Debug.Log("No value given. Please enter a new value.");
         }
@@ -50,7 +50,7 @@ public class ListSample : MonoBehaviour
         }
         else
         {
-            _list.Remove(_list[_list.Count - 1]);
+            _list.RemoveAt(_list.Count - 1);
         }
     }
     [ContextMenu("Clear entire list")]
