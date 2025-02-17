@@ -23,7 +23,7 @@ public class CollectionsTest : MonoBehaviour
     private IEnumerator AnimationRoutine()
     {
         //yield return null;
-        _targetNumber = 0;
+        _targetNumber = 1;
         float interval = _speed * Time.deltaTime;
         float distance = (_curent.position - _target.position).magnitude;
         while (_targetNumber < _targets.Length)

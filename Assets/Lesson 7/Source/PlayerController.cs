@@ -25,7 +25,7 @@ namespace Lesson7
             Vector3 right = _transform.right;
             Vector3 movement = forward * _moveInput.y + right * _moveInput.x;
             _characterController.SimpleMove(movement * _speed);
-            float rotationY = _rotateInput.x * _speed;
+            float rotationY = _rotateInput.x * _speed/7;
             _characterController.transform.Rotate(Vector3.up, rotationY);
         }
 
