@@ -189,6 +189,17 @@
                 },
                 {
                     "name": "",
+                    "id": "5d91fff9-b512-47bd-9c1f-79bc6e54bf14",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Primary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "cf266bc7-caaf-48db-8eeb-b3a96871b243",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
