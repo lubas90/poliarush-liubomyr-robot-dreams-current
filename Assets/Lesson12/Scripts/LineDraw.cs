@@ -9,10 +9,10 @@ public class PlayerRaycast : MonoBehaviour
     [SerializeField] private LayerMask targetLayers;
     [SerializeField] private float explosionRadius = 5f;
     [SerializeField] private float explosionForce = 500f;
-    [SerializeField] private Material sphereMaterial;
+    [SerializeField] private GameObject explosionPrefab;
 
     private bool _initialized = false;
-    private GameObject explosionSphere;
+    private GameObject explosionInstance;
 
     private void Start()
     {
@@ -68,22 +68,11 @@ public class PlayerRaycast : MonoBehaviour
 
     private IEnumerator HandleExplosion(Vector3 position)
     {
-        if (explosionSphere != null)
+        if (explosionInstance != null)
         {
             yield break;
         }
-
-        explosionSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        explosionSphere.transform.position = position;
-        explosionSphere.transform.localScale = Vector3.one * explosionRadius * 2;
-        if (sphereMaterial != null)
-        {
-            explosionSphere.GetComponent<Renderer>().material = sphereMaterial;
-        }
-        Destroy(explosionSphere, 0.5f);
-        yield return new WaitForSeconds(0.5f);
-        explosionSphere = null;
-
+        
         Collider[] colliders = Physics.OverlapSphere(position, explosionRadius);
         foreach (Collider hit in colliders)
         {
@@ -93,5 +82,9 @@ public class PlayerRaycast : MonoBehaviour
                 rb.AddExplosionForce(explosionForce, position, explosionRadius);
             }
         }
+        explosionInstance = Instantiate(explosionPrefab, position, Quaternion.identity);
+        yield return new WaitForSeconds(0.5f);
+        Destroy(explosionInstance);
+        explosionInstance = null;
     }
 }
