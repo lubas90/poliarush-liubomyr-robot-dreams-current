@@ -6,6 +6,7 @@ namespace Lesson7
     {
         [SerializeField] private Transform _pitchAnchor;
         [SerializeField] private Transform _yawAnchor;
+        [SerializeField] private Transform _weaponToRotate;
         [SerializeField] private float _sensitivity;
 
         private float _pitch = 20f;
@@ -22,7 +23,7 @@ namespace Lesson7
         {
             _pitch -= _lookInput.y * _sensitivity * Time.deltaTime;
             _yaw += _lookInput.x * _sensitivity * Time.deltaTime;
-            
+            _weaponToRotate.localRotation = Quaternion.Euler(_pitch, _yaw, 0f);
             _pitchAnchor.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
             _yawAnchor.localRotation = Quaternion.Euler(0f, _yaw, 0f);
         }

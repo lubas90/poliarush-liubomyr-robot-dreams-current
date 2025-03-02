@@ -10,7 +10,8 @@ namespace Lesson7
         public static event Action<Vector2> OnRotateInput;
         public static event Action<Vector2> OnLookInput;
         public static event Action<bool> OnCameraLock;
-        public static event Action<bool> OnPrimaryInput; // Added event for primary input
+        public static event Action<bool> OnPrimaryInput;
+        public static event Action<bool> OnGrenadeInput;
 
         [SerializeField] private InputActionAsset _inputActionAsset;
         [SerializeField] private string _mapName;
@@ -18,13 +19,15 @@ namespace Lesson7
         [SerializeField] private string _rotateName;
         [SerializeField] private string _lookAroundName;
         [SerializeField] private string _cameraLockName;
-        [SerializeField] private string _primaryInputName; // Added primary input name
+        [SerializeField] private string _primaryInputName;
+        [SerializeField] private string _grenadeInputName;
 
         private InputAction _moveAction;
         private InputAction _rotateAction;
         private InputAction _lookAroundAction;
         private InputAction _cameraLockAction;
-        private InputAction _primaryInputAction; // Added primary input action
+        private InputAction _primaryInputAction;
+        private InputAction _grenadeInputAction;
 
         private bool _inputUpdated;
 
@@ -36,7 +39,8 @@ namespace Lesson7
             _rotateAction = actionMap[_rotateName];
             _lookAroundAction = actionMap[_lookAroundName];
             _cameraLockAction = actionMap[_cameraLockName];
-            _primaryInputAction = actionMap[_primaryInputName]; // Assign primary input action
+            _primaryInputAction = actionMap[_primaryInputName];
+            _grenadeInputAction = actionMap[_grenadeInputName];
 
             _moveAction.performed += MovePerformedHandler;
             _moveAction.canceled += MoveCanceledHandler;
@@ -50,8 +54,11 @@ namespace Lesson7
             _cameraLockAction.performed += CameraLockPerformedHandler;
             _cameraLockAction.canceled += CameraLockCanceledHandler;
             
-            _primaryInputAction.performed += PrimaryInputPerformedHandler; // Subscribe to primary input
+            _primaryInputAction.performed += PrimaryInputPerformedHandler;
             _primaryInputAction.canceled += PrimaryInputCanceledHandler;
+            
+            _grenadeInputAction.performed += GrenadeInputPerformedHandler;
+            _grenadeInputAction.canceled += GrenadeInputCanceledHandler;
         }
 
         private void OnDisable()
@@ -117,5 +124,16 @@ namespace Lesson7
         {
             OnPrimaryInput?.Invoke(false); // Trigger event for primary input
         }
+        
+        private void GrenadeInputPerformedHandler(InputAction.CallbackContext context)
+        {
+            OnGrenadeInput?.Invoke(true); // Trigger event for primary input
+        }
+        
+        private void GrenadeInputCanceledHandler(InputAction.CallbackContext context)
+        {
+            OnGrenadeInput?.Invoke(false); // Trigger event for primary input
+        }
+        
     }
 }

@@ -16,13 +16,13 @@ public class PlayerRaycast : MonoBehaviour
 
     private void Start()
     {
-        InputController.OnPrimaryInput += HandleRaycastTrigger;
+        InputController.OnGrenadeInput += HandleRaycastTrigger;
         _initialized = true;
     }
 
     private void OnDestroy()
     {
-        InputController.OnPrimaryInput -= HandleRaycastTrigger;
+        InputController.OnGrenadeInput -= HandleRaycastTrigger;
     }
 
     private void HandleRaycastTrigger(bool isPressed)
@@ -72,6 +72,9 @@ public class PlayerRaycast : MonoBehaviour
         {
             yield break;
         }
+
+        explosionInstance = Instantiate(explosionPrefab, position, Quaternion.identity);
+        yield return new WaitForSeconds(0.1f);
         
         Collider[] colliders = Physics.OverlapSphere(position, explosionRadius);
         foreach (Collider hit in colliders)
@@ -79,11 +82,13 @@ public class PlayerRaycast : MonoBehaviour
             Rigidbody rb = hit.attachedRigidbody;
             if (rb != null)
             {
-                rb.AddExplosionForce(explosionForce, position, explosionRadius);
+                float distance = Vector3.Distance(position, hit.transform.position);
+                float falloffFactor = Mathf.Clamp01(1 - (distance / explosionRadius));
+                rb.AddExplosionForce(explosionForce * falloffFactor, position, explosionRadius);
             }
         }
-        explosionInstance = Instantiate(explosionPrefab, position, Quaternion.identity);
-        yield return new WaitForSeconds(0.5f);
+        
+        yield return new WaitForSeconds(0.4f);
         Destroy(explosionInstance);
         explosionInstance = null;
     }

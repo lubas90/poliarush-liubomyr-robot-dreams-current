@@ -51,3 +51,4 @@ MonoBehaviour:
   _rotateName: Rotation
   _lookAroundName: LookAround
   _cameraLockName: CameraLock
+  _primaryInputName: Primary
