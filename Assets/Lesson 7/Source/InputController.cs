@@ -12,6 +12,7 @@ namespace Lesson7
         public static event Action<bool> OnCameraLock;
         public static event Action<bool> OnPrimaryInput;
         public static event Action<bool> OnGrenadeInput;
+        public static event Action<bool> OnGoLobbyInput;
 
         [SerializeField] private InputActionAsset _inputActionAsset;
         [SerializeField] private string _mapName;
@@ -21,6 +22,7 @@ namespace Lesson7
         [SerializeField] private string _cameraLockName;
         [SerializeField] private string _primaryInputName;
         [SerializeField] private string _grenadeInputName;
+        [SerializeField] private string _goLobbyInputName;
 
         private InputAction _moveAction;
         private InputAction _rotateAction;
@@ -28,6 +30,7 @@ namespace Lesson7
         private InputAction _cameraLockAction;
         private InputAction _primaryInputAction;
         private InputAction _grenadeInputAction;
+        private InputAction _goLobbyInputAction;
 
         private bool _inputUpdated;
 
@@ -41,6 +44,7 @@ namespace Lesson7
             _cameraLockAction = actionMap[_cameraLockName];
             _primaryInputAction = actionMap[_primaryInputName];
             _grenadeInputAction = actionMap[_grenadeInputName];
+            _goLobbyInputAction = actionMap[_goLobbyInputName];
 
             _moveAction.performed += MovePerformedHandler;
             _moveAction.canceled += MoveCanceledHandler;
@@ -59,6 +63,9 @@ namespace Lesson7
             
             _grenadeInputAction.performed += GrenadeInputPerformedHandler;
             _grenadeInputAction.canceled += GrenadeInputCanceledHandler;
+            
+            _goLobbyInputAction.performed += GoLobbyInputPerformedHandler;
+            _goLobbyInputAction.canceled += GoLobbyInputCanceledHandler;
         }
 
         private void OnDisable()
@@ -133,6 +140,15 @@ namespace Lesson7
         private void GrenadeInputCanceledHandler(InputAction.CallbackContext context)
         {
             OnGrenadeInput?.Invoke(false); // Trigger event for primary input
+        }
+        private void GoLobbyInputPerformedHandler(InputAction.CallbackContext context)
+        {
+            OnGoLobbyInput?.Invoke(true); 
+        }
+        
+        private void GoLobbyInputCanceledHandler(InputAction.CallbackContext context)
+        {
+            OnGoLobbyInput?.Invoke(false); // Trigger event for primary input
         }
         
     }
