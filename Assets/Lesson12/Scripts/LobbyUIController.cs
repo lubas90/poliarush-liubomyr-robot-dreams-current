@@ -12,23 +12,27 @@ public class LobbyUIController : MonoBehaviour
 
     [Header("Scene Management")]
     [SerializeField] private string trainingSpaceSceneName;
+    [SerializeField] private string gameSpaceSceneName;
 
     void Start()
     {
-        // Disable "Start" and "Settings" buttons
-        startButton.interactable = false;
+        // Disable "Settings" button
         settingsButton.interactable = false;
 
         // Setup listeners
         trainingSpaceButton.onClick.AddListener(LoadTrainingSpace);
         quitGameButton.onClick.AddListener(QuitGame);
+        startButton.onClick.AddListener(StartGame);
     }
 
     void LoadTrainingSpace()
     {
         SceneManager.LoadScene(trainingSpaceSceneName);
     }
-
+    void StartGame()
+    {
+        SceneManager.LoadScene(gameSpaceSceneName);
+    }
     void QuitGame()
     {
 #if UNITY_EDITOR
