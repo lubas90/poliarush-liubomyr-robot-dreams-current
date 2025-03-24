@@ -14,8 +14,8 @@ namespace Lesson7
 
         private void Start()
         {
-            InputController.OnMoveInput += MoveHandler;
-            InputController.OnRotateInput += RotateHandler;
+            //InputController.OnMoveInput += MoveHandler;
+            //InputController.OnRotateInput += RotateHandler;
             _transform = transform;
         }
 

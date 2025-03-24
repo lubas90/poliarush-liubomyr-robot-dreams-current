@@ -1,18 +1,20 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using StateMachineSystem.ServiceLocatorSystem;
 
 namespace Lesson7
 {
-    public class InputController : MonoBehaviour
+    public class InputController : MonoServiceBase
     {
-        public static event Action<Vector2> OnMoveInput;
-        public static event Action<Vector2> OnRotateInput;
+        public event Action<Vector2> OnMoveInput;
+        public event Action<Vector2> OnRotateInput;
         public static event Action<Vector2> OnLookInput;
         public static event Action<bool> OnCameraLock;
         public static event Action<bool> OnPrimaryInput;
         public static event Action<bool> OnGrenadeInput;
         public static event Action<bool> OnGoLobbyInput;
+        public event Action OnJump;
 
         [SerializeField] private InputActionAsset _inputActionAsset;
         [SerializeField] private string _mapName;
@@ -23,6 +25,7 @@ namespace Lesson7
         [SerializeField] private string _primaryInputName;
         [SerializeField] private string _grenadeInputName;
         [SerializeField] private string _goLobbyInputName;
+        [SerializeField] private string _jumpInputName;
 
         private InputAction _moveAction;
         private InputAction _rotateAction;
@@ -31,8 +34,11 @@ namespace Lesson7
         private InputAction _primaryInputAction;
         private InputAction _grenadeInputAction;
         private InputAction _goLobbyInputAction;
+        private InputAction _jumpAction;
 
         private bool _inputUpdated;
+        
+        public override Type Type { get; } = typeof(InputController);
 
         private void OnEnable()
         {
@@ -45,6 +51,7 @@ namespace Lesson7
             _primaryInputAction = actionMap[_primaryInputName];
             _grenadeInputAction = actionMap[_grenadeInputName];
             _goLobbyInputAction = actionMap[_goLobbyInputName];
+            _jumpAction = actionMap[_jumpInputName];
 
             _moveAction.performed += MovePerformedHandler;
             _moveAction.canceled += MoveCanceledHandler;
@@ -66,6 +73,8 @@ namespace Lesson7
             
             _goLobbyInputAction.performed += GoLobbyInputPerformedHandler;
             _goLobbyInputAction.canceled += GoLobbyInputCanceledHandler;
+            
+            _jumpAction.performed += JumpPerformedHandler;
         }
 
         private void OnDisable()
@@ -79,7 +88,8 @@ namespace Lesson7
             OnRotateInput = null;
             OnLookInput = null;
             OnCameraLock = null;
-            OnPrimaryInput = null; // Cleanup primary input event
+            OnPrimaryInput = null;
+            _jumpAction.performed -= JumpPerformedHandler;
         }
 
         private void MovePerformedHandler(InputAction.CallbackContext context)
@@ -150,6 +160,9 @@ namespace Lesson7
         {
             OnGoLobbyInput?.Invoke(false); // Trigger event for primary input
         }
-        
+        private void JumpPerformedHandler(InputAction.CallbackContext context)
+        {
+            OnJump?.Invoke();
+        }
     }
 }
