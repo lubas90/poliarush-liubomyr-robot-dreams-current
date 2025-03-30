@@ -23,9 +23,9 @@ namespace Lesson7
         {
             _pitch -= _lookInput.y * _sensitivity * Time.deltaTime;
             _yaw += _lookInput.x * _sensitivity * Time.deltaTime;
-            _weaponToRotate.localRotation = Quaternion.Euler(_pitch, _yaw, 0f);
+            _weaponToRotate.localRotation = Quaternion.Euler(0f, _yaw, 0f);
             _pitchAnchor.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
-            _yawAnchor.localRotation = Quaternion.Euler(0f, _yaw, 0f);
+            //_yawAnchor.localRotation = Quaternion.Euler(0f, _yaw, 0f);
         }
 
         private void LookHandler(Vector2 lookInput)
