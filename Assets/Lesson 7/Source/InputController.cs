@@ -14,6 +14,7 @@ namespace Lesson7
         public static event Action<bool> OnPrimaryInput;
         public static event Action<bool> OnGrenadeInput;
         public static event Action<bool> OnGoLobbyInput;
+        public static event Action<bool> OnInteractInput;
         public event Action OnJump;
 
         [SerializeField] private InputActionAsset _inputActionAsset;
@@ -26,6 +27,7 @@ namespace Lesson7
         [SerializeField] private string _grenadeInputName;
         [SerializeField] private string _goLobbyInputName;
         [SerializeField] private string _jumpInputName;
+        [SerializeField] private string _interactInputName;
 
         private InputAction _moveAction;
         private InputAction _rotateAction;
@@ -35,6 +37,7 @@ namespace Lesson7
         private InputAction _grenadeInputAction;
         private InputAction _goLobbyInputAction;
         private InputAction _jumpAction;
+        private InputAction _interactInputAction;
 
         private bool _inputUpdated;
         
@@ -52,6 +55,7 @@ namespace Lesson7
             _grenadeInputAction = actionMap[_grenadeInputName];
             _goLobbyInputAction = actionMap[_goLobbyInputName];
             _jumpAction = actionMap[_jumpInputName];
+            _interactInputAction = actionMap[_interactInputName];
 
             _moveAction.performed += MovePerformedHandler;
             _moveAction.canceled += MoveCanceledHandler;
@@ -75,6 +79,9 @@ namespace Lesson7
             _goLobbyInputAction.canceled += GoLobbyInputCanceledHandler;
             
             _jumpAction.performed += JumpPerformedHandler;
+            
+            _interactInputAction.performed += InteractInputPerformedHandler;
+            _interactInputAction.canceled += InteractInputCanceledHandler;
         }
 
         private void OnDisable()
@@ -89,6 +96,7 @@ namespace Lesson7
             OnLookInput = null;
             OnCameraLock = null;
             OnPrimaryInput = null;
+            OnInteractInput = null;
             _jumpAction.performed -= JumpPerformedHandler;
         }
 
@@ -134,22 +142,22 @@ namespace Lesson7
 
         private void PrimaryInputPerformedHandler(InputAction.CallbackContext context)
         {
-            OnPrimaryInput?.Invoke(true); // Trigger event for primary input
+            OnPrimaryInput?.Invoke(true); 
         }
         
         private void PrimaryInputCanceledHandler(InputAction.CallbackContext context)
         {
-            OnPrimaryInput?.Invoke(false); // Trigger event for primary input
+            OnPrimaryInput?.Invoke(false); 
         }
         
         private void GrenadeInputPerformedHandler(InputAction.CallbackContext context)
         {
-            OnGrenadeInput?.Invoke(true); // Trigger event for primary input
+            OnGrenadeInput?.Invoke(true); 
         }
         
         private void GrenadeInputCanceledHandler(InputAction.CallbackContext context)
         {
-            OnGrenadeInput?.Invoke(false); // Trigger event for primary input
+            OnGrenadeInput?.Invoke(false); 
         }
         private void GoLobbyInputPerformedHandler(InputAction.CallbackContext context)
         {
@@ -158,11 +166,21 @@ namespace Lesson7
         
         private void GoLobbyInputCanceledHandler(InputAction.CallbackContext context)
         {
-            OnGoLobbyInput?.Invoke(false); // Trigger event for primary input
+            OnGoLobbyInput?.Invoke(false); 
         }
         private void JumpPerformedHandler(InputAction.CallbackContext context)
         {
             OnJump?.Invoke();
+        }
+        
+        private void InteractInputPerformedHandler(InputAction.CallbackContext context)
+        {
+            OnInteractInput?.Invoke(true); 
+        }
+        
+        private void InteractInputCanceledHandler(InputAction.CallbackContext context)
+        {
+            OnInteractInput?.Invoke(false); 
         }
     }
 }

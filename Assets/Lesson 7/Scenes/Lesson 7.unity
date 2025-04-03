@@ -258,6 +258,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7519819315050732250, guid: e9712ede35047754aa8a57ce780c81df,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8453357067488140981, guid: e9712ede35047754aa8a57ce780c81df,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -331,6 +336,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InputController
       objectReference: {fileID: 0}
+    - target: {fileID: 2706082011886139370, guid: ad97229d88c9c1c4a978d6df7f01a4ec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3887923651730599877, guid: ad97229d88c9c1c4a978d6df7f01a4ec,
         type: 3}
       propertyPath: _rotateName
@@ -386,7 +396,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3887923651730599877, guid: ad97229d88c9c1c4a978d6df7f01a4ec, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

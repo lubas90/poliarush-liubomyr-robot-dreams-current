@@ -12,7 +12,7 @@ namespace BehaviourTreeSystem.BehaviourStates
             Reload,
             Shoot,
         }
-        
+
         private readonly Transform _characterTransform;
         private readonly Transform _weaponTransform;
 
@@ -20,7 +20,7 @@ namespace BehaviourTreeSystem.BehaviourStates
         private float _time;
         private int _charge;
         private float _inaccuracy;
-        
+
         public ShootBehaviour(StateMachine stateMachine, byte stateId, EnemyController enemyController) : base(stateMachine, stateId, enemyController)
         {
             _characterTransform = enemyController.CharacterTransform;
@@ -37,7 +37,7 @@ namespace BehaviourTreeSystem.BehaviourStates
         protected override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
-            
+
             if (_state != State.Shoot)
                 UpdateRotation();
 
@@ -63,9 +63,9 @@ namespace BehaviourTreeSystem.BehaviourStates
             _time += deltaTime;
             if (_time < enemyController.Data.AimTime)
                 return;
-            
+
             _inaccuracy = enemyController.Data.Inaccuracy;
-            
+
             _charge = enemyController.WeaponData.MaxCharge;
             Shoot();
         }
@@ -73,6 +73,7 @@ namespace BehaviourTreeSystem.BehaviourStates
         private void CooldownUpdate(float deltaTime)
         {
             _time += deltaTime;
+            enemyController.ComputeBehaviour();
             if (_time < enemyController.WeaponData.CooldownTime)
                 return;
             Shoot();
@@ -92,27 +93,27 @@ namespace BehaviourTreeSystem.BehaviourStates
             _time += deltaTime;
             if (_time < enemyController.Data.ShotDelay)
                 return;
-            
+
             enemyController.HitScanGun.Shoot();
             _time = 0f;
             _state = _charge > 0 ? State.Cooldown : State.Reload;
         }
-        
+
         private void Shoot()
         {
             Vector3 playerPosition = enemyController.Playerdar.CurrentTarget.TargetPivot.position;
             Vector3 weaponDirection =
                 (GetAimingTarget(playerPosition, _inaccuracy) - _weaponTransform.position).normalized;
             _weaponTransform.rotation = Quaternion.LookRotation(weaponDirection);
-            
+
             _charge -= enemyController.WeaponData.ChargePerShot;
             _time = 0f;
 
             _inaccuracy = Mathf.Max(_inaccuracy - enemyController.Data.AccuracyPerShot, enemyController.Data.MinInaccuracy);
-            
+
             _state = State.Shoot;
         }
-        
+
         public Vector3 GetAimingTarget(Vector3 playerPosition, float inaccuracyMultiplier)
         {
             Vector3 localPlayerPos = _characterTransform.InverseTransformPoint(playerPosition);
@@ -124,7 +125,7 @@ namespace BehaviourTreeSystem.BehaviourStates
             float inaccuracyFactor = distanceFactor * enemyController.Data.InaccuracyFactor;
 
             inaccuracyMultiplier = inaccuracyMultiplier - inaccuracyFactor;
-            
+
             Vector2 randomOffset = Random.insideUnitCircle * inaccuracyMultiplier;
 
             localPlayerPos.x += randomOffset.x;
@@ -134,21 +135,21 @@ namespace BehaviourTreeSystem.BehaviourStates
 
             return targetPosition;
         }
-        
+
         private void UpdateRotation()
         {
             Vector3 direction = Vector3
                 .ProjectOnPlane(
                     enemyController.Playerdar.CurrentTarget.TargetPivot.position - _characterTransform.position,
                     Vector3.up).normalized;
-            
+
             _characterTransform.rotation = Quaternion.LookRotation(direction);
 
             Vector3 weaponDirection =
                 (enemyController.Playerdar.CurrentTarget.TargetPivot.position - _weaponTransform.position).normalized;
             _weaponTransform.rotation = Quaternion.LookRotation(weaponDirection);
         }
-        
+
         public override void Dispose()
         {
         }

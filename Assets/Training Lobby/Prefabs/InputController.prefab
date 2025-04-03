@@ -52,3 +52,7 @@ MonoBehaviour:
   _lookAroundName: LookAround
   _cameraLockName: CameraLock
   _primaryInputName: Primary
+  _grenadeInputName: Grenade
+  _goLobbyInputName: GoToLobby
+  _jumpInputName: Jump
+  _interactInputName: Interact

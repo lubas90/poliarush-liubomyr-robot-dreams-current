@@ -36,7 +36,7 @@ namespace BehaviourTreeSystem
             _enemies = new List<EnemyController>(_maxEnemies);
             
             _time = 0f;
-            SpawnEnemies(_maxEnemies);
+            //SpawnEnemies(_maxEnemies);
         }
 
         private void Update()

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6806714750553350143}
   - component: {fileID: 2569724005953136370}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: DamageValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 5176327996907500000}
   - component: {fileID: 2947193592169567765}
   - component: {fileID: 1469955896087364332}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,6 +200,7 @@ MonoBehaviour:
   _weaponData: {fileID: 11400000, guid: 4feacd8bb2dc34d268ecf3d96a313df3, type: 2}
   _camera: {fileID: 0}
   _playerdar: {fileID: 1929653604379490291}
+  _hitScanMelee: {fileID: 8252423754499262876}
   _patrolStamina: 0
   _currentBehaviour: 0
 --- !u!114 &5176327996907500000
@@ -268,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1486559936252661681}
   - component: {fileID: 8801513163820068284}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: HealthBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9046367065043803440}
   - component: {fileID: 1929653604379490291}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Playerdar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8160444693527603809}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: FallMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2645103302493581538}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: TargetPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +464,7 @@ GameObject:
   - component: {fileID: 5488488367700735818}
   - component: {fileID: 6816934841752924112}
   - component: {fileID: 7470659302353024661}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -547,7 +548,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8756986759307030075}
   - component: {fileID: 558640686853012785}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: HealthValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +633,7 @@ GameObject:
   - component: {fileID: 4711031274365483996}
   - component: {fileID: 5653949159853988020}
   - component: {fileID: 7143308176442242216}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: HealthIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -648,7 +649,7 @@ Transform:
   m_GameObject: {fileID: 7554839718272878678}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.25, z: 0}
+  m_LocalPosition: {x: -0.658, y: 2.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -699,7 +700,7 @@ GameObject:
   - component: {fileID: 5162319733444815943}
   - component: {fileID: 3099794918974956984}
   - component: {fileID: 5197674755125268849}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Visor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -846,6 +847,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7053225880022479718}
+    - targetCorrespondingSourceObject: {fileID: 7244234418078356822, guid: 6aaa11d444d7c4d1898cd0eba2cd74f6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8252423754499262876}
+    - targetCorrespondingSourceObject: {fileID: 7244234418078356822, guid: 6aaa11d444d7c4d1898cd0eba2cd74f6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5075315946982688032}
   m_SourcePrefab: {fileID: 100100000, guid: 6aaa11d444d7c4d1898cd0eba2cd74f6, type: 3}
 --- !u!4 &691371705530987374 stripped
 Transform:
@@ -902,4 +911,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gun: {fileID: 2484693345626369869}
+  _data: {fileID: 11400000, guid: 4feacd8bb2dc34d268ecf3d96a313df3, type: 2}
+--- !u!114 &8252423754499262876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8810832243459563213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708a16962698e4c11a74175b55dce5a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _range: 2
+  _radius: 1
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &5075315946982688032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8810832243459563213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f15508bc63040e182b54e6565ce55b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 4feacd8bb2dc34d268ecf3d96a313df3, type: 2}

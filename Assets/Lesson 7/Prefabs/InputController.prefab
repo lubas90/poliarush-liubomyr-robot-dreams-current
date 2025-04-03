@@ -48,5 +48,11 @@ MonoBehaviour:
     type: 3}
   _mapName: DefaultMap
   _moveName: Movement
+  _rotateName: 
   _lookAroundName: LookAround
   _cameraLockName: CameraLock
+  _primaryInputName: 
+  _grenadeInputName: 
+  _goLobbyInputName: 
+  _jumpInputName: 
+  _interactInputName: 

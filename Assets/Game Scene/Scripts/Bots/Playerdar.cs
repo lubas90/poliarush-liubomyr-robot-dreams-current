@@ -20,9 +20,7 @@ namespace BehaviourTreeSystem
         [SerializeField] private float _angle;
         [SerializeField] private float _meleeRange;
 
-
         private float _cosine;
-        
         private Transform _transform;
         private IPlayerService _playerService;
 
@@ -31,7 +29,7 @@ namespace BehaviourTreeSystem
         private bool _seesTarget;
         private bool _meleeTarget;
         private Vector3 _lastTargetPosition;
-        
+
         private State _currentState;
 
         public State CurrentState
@@ -45,13 +43,15 @@ namespace BehaviourTreeSystem
                 _enemyController.ComputeBehaviour();
             }
         }
-        
+
         public TargetableBase CurrentTarget => _currentTarget;
         public bool HasTarget => _hasTarget;
         public bool SeesTarget => _seesTarget;
         public bool MeleeTarget => _meleeTarget;
         public Vector3 LastTargetPosition => _lastTargetPosition;
-        
+        public float MeleeRange => _meleeRange;
+        public EnemyController EnemyController => _enemyController;
+
         private void Start()
         {
             _transform = transform;
@@ -78,31 +78,36 @@ namespace BehaviourTreeSystem
                     CheckingDistance();
                     break;
             }
+
+            UpdateMeleeTarget();
+        }
+
+        private void UpdateMeleeTarget()
+        {
+            float distance = Vector3.Distance(_playerService.Player.transform.position, transform.position);
+            _meleeTarget = distance < _meleeRange;
         }
 
         private void CheckingDistance()
         {
             if (!CheckTarget(_playerService.Player.Targetable))
                 return;
+
+            UpdateMeleeTarget();
             float distance = Vector3.Distance(_playerService.Player.transform.position, transform.position);
-            if (distance < _meleeRange)
-            {
-                _meleeTarget = true;
-                Debug.Log("melee target, distance:"+distance.ToString()+", melee range:"+_meleeRange.ToString());
-            }
-            else
-            {
-                _meleeTarget = false;
-                Debug.Log("gun target, distance:"+distance.ToString()+", melee range:"+_meleeRange.ToString());
-            }
+
+            Debug.Log(_meleeTarget
+                ? $"melee target, distance:{distance}, melee range:{_meleeRange}"
+                : $"gun target, distance:{distance}, melee range:{_meleeRange}");
 
             CurrentState = State.Chasing;
         }
+
         private void ScanningUpdate()
         {
             if (!CheckTarget(_playerService.Player.Targetable))
                 return;
-            
+
             _currentTarget = _playerService.Player.Targetable;
             _hasTarget = true;
             _seesTarget = true;
@@ -112,10 +117,10 @@ namespace BehaviourTreeSystem
         private void ChasingUpdate()
         {
             _lastTargetPosition = _currentTarget.TargetPivot.position;
-            
+
             if (CheckTarget(_currentTarget))
                 return;
-            
+
             _seesTarget = false;
             CurrentState = State.Searching;
         }
@@ -160,30 +165,27 @@ namespace BehaviourTreeSystem
                 }
             }
         }
-        
+
         private bool CheckTarget(TargetableBase targetable, bool useFov = true)
         {
             Vector3 position = _transform.position;
             Vector3 playerPosition = targetable.TargetPivot.position;
-            
+
             Vector3 playerDirection = Vector3.ProjectOnPlane(playerPosition - position, Vector3.up);
 
             if (playerDirection.sqrMagnitude > _range * _range)
                 return false;
-            
+
             playerDirection.Normalize();
             Vector3 forward = Vector3.ProjectOnPlane(_transform.forward, Vector3.up).normalized;
-            
-            if (useFov)
-            {
-                if (Vector3.Dot(playerDirection, forward) < _cosine)
-                    return false;
-            }
+
+            if (useFov && Vector3.Dot(playerDirection, forward) < _cosine)
+                return false;
+
             if (!Physics.Raycast(position, (playerPosition - position).normalized, out RaycastHit hit, _range))
                 return false;
-            if (hit.collider != _playerService.Player.CharacterController)
-                return false;
-            return true;
+
+            return hit.collider == _playerService.Player.CharacterController;
         }
 
         private void HealthChangedHandler(int health)

@@ -33,11 +33,12 @@ public class LobbyUIController : MonoBehaviour
     void StartGame()
     {
         SceneManager.LoadScene(gameSpaceSceneName);
+        Cursor.lockState = CursorLockMode.Locked;
     }
     void QuitGame()
     {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false; // Exits Play mode in Unity Editor
+        UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit(); // Quits the built application
 #endif

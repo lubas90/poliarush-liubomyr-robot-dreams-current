@@ -25,7 +25,7 @@ namespace BehaviourTreeSystem
         [SerializeField] private WeaponData _weaponData;
         [SerializeField] private Camera _camera;
         [SerializeField] private Playerdar _playerdar;
-        
+        [SerializeField] private HitScanMelee _hitScanMelee;
         [SerializeField, ReadOnly] private float _patrolStamina;
         [SerializeField, ReadOnly] private EnemyBehaviour _currentBehaviour;
 
@@ -55,7 +55,8 @@ namespace BehaviourTreeSystem
         public Transform WeaponTransform => _weaponTransform;
         public HitScanGun HitScanGun => _hitScanGun;
         public WeaponData WeaponData => _weaponData;
-
+        public HitScanMelee HitScanMelee => _hitScanMelee;
+        
         private void Awake()
         {
             _navMeshAgent.updatePosition = false;

@@ -20,6 +20,7 @@ namespace BehaviourTreeSystem
         [SerializeField] private float _innacuracyFactor;
         [SerializeField] private float _shotDelay;
         [SerializeField] private float _punchDistance;
+        [SerializeField] private float _meleeRange;
         
         public Vector2 IdleDuration => _idleDuration;
         public float MaxPatrolStamina => _maxPatrolStamina;

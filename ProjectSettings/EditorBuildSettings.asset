@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Training Lobby/Scenes/LobbyyScene.unity
     guid: 5a7e7e0e72f5c4c86a7aa91bf66e39e0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Training Lobby/Scenes/Lesson12.unity
     guid: e7a045bf1d6ec4a24be067bc18115598
   - enabled: 1
